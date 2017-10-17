@@ -1,0 +1,6 @@
+
+@9/17/2017  11:26:55:715: Application Started
+@9/17/2017  11:26:56:88: 
+Call placed in Twitter API with credentials
+ [object Object], statuses/user_timeline
+@9/17/2017  11:26:56:98: Exiting Application
