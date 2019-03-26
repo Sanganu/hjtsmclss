@@ -1,0 +1,29 @@
+{
+  "name": "hjtsmclss",
+  "version": "1.0.0",
+  "description": "Node Application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scodingjs/hjtsmclss.git"
+  },
+  "author": "Sangeetha",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/scodingjs/hjtsmclss/issues"
+  },
+  "homepage": "https://github.com/scodingjs/hjtsmclss#readme",
+  "dependencies": {
+    "dotenv": "^7.0.0",
+    "fa": "^1.0.1",
+    "fs": "0.0.1-security",
+    "inquirer": "^4.0.1",
+    "mysql": "^2.15.0",
+    "node-spotify-api": "^1.0.7",
+    "spotify": "^0.3.0",
+    "twitter": "^1.7.1"
+  }
+}

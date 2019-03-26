@@ -8,6 +8,8 @@
 
 // Global variables
 var logfile = require('fs');
+require('dotenv').config();
+
 /* The folllowing code is added to delete the log contents of the previous session
 Since I dont want a giant log file while I develop the application - it makes hard to debug */
 logfile.writeFile("lirilogfile.txt",``,function(err)
@@ -37,19 +39,20 @@ function takeaction()
       {
         console.log("\nInsufficient Arguments");
         console.log("\nPlease you one of the following formats");
-        console.log("\n$node liriv1.js my-tweets");
-        console.log("\n$node liriv1.js spotify-this-song I want it that way");
-        console.log("\n$node liriv1.js movie-this Bajirao Mastani");
-        console.log("\n$node liriv1.js do-what-it-says");
+        console.log("\n$node liriv2.js my-tweets");
+        console.log("\n$node liriv2.js spotify-this-song I want it that way");
+        console.log("\n$node liriv2.js movie-this Bajirao Mastani");
+        console.log("\n$node liriv2.js do-what-it-says");
         // Adding to Log file the Application exited on Insufficient arguments
         createlog(`Insufficient arrguments Application Stoped`);
 
       }
       else
       {
+                //console.log("args ok");
                 if ( process.argv[2] === 'my-tweets')
                 {
-
+                      //console.log("mytweets");
                         gettweets();
                         //Adding to command file for do-what-it-says
                           fs.appendFile("liricommands.txt",`${process.argv[2]},`,function(error){
@@ -119,11 +122,11 @@ function takeaction()
 
                }
                else {
-                 console.log("\nPlease you one of the following formats");
-                 console.log("\n$node liriv1.js my-tweets");
-                 console.log("\n$node liriv1.js spotify-this-song Lane Boy");
-                 console.log("\n$node liriv1.js movie-this Speed");
-                 console.log("\n$node liriv1.js do-what-it-says");
+                 console.log("\nPlease use one of the following formats");
+                 console.log("\n$node liriv2.js my-tweets");
+                 console.log("\n$node liriv2.js spotify-this-song Lane Boy");
+                 console.log("\n$node liriv2.js movie-this Speed");
+                 console.log("\n$node liriv2.js do-what-it-says");
                }
       } //end of process argv count
 
@@ -133,8 +136,8 @@ function getmusic(album_name)
 {
         var spotify = require('node-spotify-api');
         var myspotify = new spotify({
-                   id:'' ,
-                  secret: '',
+                   id:process.env.SPOTIFY_ID ,
+                  secret: process.env.SPOTIFY_SECRET,
                 });
                 //Log file about placing an API call with the credentials info
                 createlog(`Call placed in Spotify API with credentials\n ${myspotify}, type:track, query:${album_name}, limit:1`);
@@ -202,15 +205,19 @@ function gettweets()
 {
          var Twitter = require('twitter');
          var mytwitter = new Twitter({
-                        consumer_key : '',
-                        consumer_secret : '',
-                        access_token_key : '',
-                      access_token_secret : ''
+                        consumer_key : process.env.TWITTER_CONSUMER_KEY,
+                        consumer_secret :process.env.TWITTER_CONSUMER_SECRET,
+                        access_token_key : process.env.TWITTER_ACCESS_TOKEN_KEY,
+                      access_token_secret : process.env.TWITTER_ACCESS_TOKEN_SECRET
                     });
                       //Log file about placing an API call with the credentials info
                     createlog(`\nCall placed in Twitter API with credentials\n ${mytwitter}, statuses/user_timeline`);
                     //log file
-    mytwitter.get('statuses/user_timeline', function(error, tweets, response) {
+
+                    //console.log(mytwitter);
+                    
+                    
+                    mytwitter.get('statuses/user_timeline', function(error, tweets, response) {
 
 
             if (!error && response.statusCode === 200) {
@@ -239,7 +246,8 @@ function gettweets()
                }//End of if
             if (error)
             {
-               throw error ;
+               //throw error ;
+               console.log("Error in fetching twitter API",error);
                     //Log file about error from twitter api call
                     createlog(`Error from  Twitter API \n ${error}`);
                     //log file

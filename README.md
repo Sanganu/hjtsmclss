@@ -12,18 +12,28 @@ Mysql, inquire, arrays, Scope of the arrays are the concepts used in this applic
 
 Folder: Hangman
 
-This application uses Nested contructors, Inquirer. Looping thru the tries and thru the questions (constructors) were done.
+Inquirer
+Constructors
+Looping thru and managing asynchronous execution flow.
 
-"hangman.js" is fun applcation which displays few questions about Presidents.
-The Response is case senitive, Exact match is expected. 
+"hangman.js" is a fun applcation which displays few questions about Presidents.
+The Response is case senitive, exact match is expected. 
 The user is asked whether he would like to proceed with the game at each level. When the user exits the application or when questions are done, Summary of the total questions, Questions attempted, How many questions the user answered right are displayed. For each question the user has 5 tries. The 'Constructors' folder contain other versions created during development.
+!["Hangman App"](link)
+
 
 Folder: liribot
+File name to run: liriv2.js
+Command prompt: node liriv2.js my-tweets
+
+The Files liriv1.js, liri.js are other versions developed along using constructors.
 
 This application uses Inquirer & fs.API calls to Twitter, Spotify, Omdbi are placed. 
 
-The fun application inspired by siri in apple phones. The twitter keys and the Spotify keys are currently empty.
+The fun application inspired by siri in apple phones. The twitter keys and the Spotify keys are currently empty. Valid twitter api keys and spotify api keys are needed to use this app. 
+
 node liriv2.js my-tweets
+
 Displays last 20 tweets, if you have less than 20 tweets it displays them. 
 node liriv2.js spotify-this-song I want it that way
 Details of the album

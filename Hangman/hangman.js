@@ -1,4 +1,4 @@
-/* Assignment on Constructos in Jode.js */
+/* Assignment on Constructos in Node.js */
 /* Dependencies - hangmans.js,cloze_constructors_1.js,cloze_constructors.js */
 /* Programm developed by:Sangeetha Kalia*/
 
