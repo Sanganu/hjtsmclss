@@ -37,7 +37,13 @@ function displayProducts()
        console.log("Catalogue :",JSON.stringify(results,null,2));
        for( var i =0;i < results.length ; i++)
        {
-           gl_catalog.push(results[i].product_id,results[i].product_name,results[i].quantity);
+           let record = {
+            "product_id":results[i].product_id,
+            "product_name":results[i].product_name,
+            "price":results[i].quantity,
+            "quantity":results[i].price
+           }
+           gl_catalog.push(record);
        }
 
        //console.log('gl catalog',gl_catalog);
@@ -82,21 +88,24 @@ function placeOrder()
       },
       {
           type:"input",
-          message:"Enter Qunatity: ",
+          message:"Enter Quantity: ",
           name:'pqty',
 
       }
     ]).then(function(data,err){
       {
-         for(var i = 0; i < gl_catalog.length; i = i+3)
+         //for(var i = 0; i < gl_catalog.length; i++)
+         var i =0;
+         var rec_updated = false;
+         while(i<gl_catalog.length && !rec_update)
          {
-           var v1 = String(gl_catalog[i]);
+           var v1 = String(gl_catalog[i].product_id);
            if(v1 === data.pid )
            {
-               if ( (data.pqty) <= parseInt(gl_catalog[i+2]))
+               if ( (data.pqty) <= parseInt(gl_catalog[i].quantity))
                {
-
-                 updateTables(data.pid,data.pqty);
+                 rec_updated = true;
+                 updateTables(data.pid,data.pqty,gl_catalog[i].quantity);
                }
                else {
                  console.log("\nWe do not have that much in stock for this item!!!");
@@ -110,28 +119,17 @@ function placeOrder()
   }
 
 
-  function updateTables(prodid,prodqty)
+  function updateTables(prodid,prodqty,stock)
   {
-         var stock
+         var updatedstock = stock - prodqty
          var v2 = prodid.trim();
 
          //console.log(prodid);
-           for(var i =0; i < gl_catalog.length ; i=i+3)
-           {
-              //  console.log(gl_catalog[i]);
-
-                var v1 = String(gl_catalog[i]);
-                var v3 = v1.trim();
-                 if (v3 === v2)
-                 {
-                     stock = gl_catalog[i+2] - prodqty ;
-                     gl_totalorder.push(gl_catalog[i],gl_catalog[i+1],prodqty);
-                 }
-           }
+        // Update Database
             var query = connection.query("update master_product set ? where ?",
                 [
                   {
-                    quantity : stock
+                    quantity : updatedstock
                   },
                   {
                     product_id : prodid
@@ -140,34 +138,69 @@ function placeOrder()
                 ], function(err,res)
                     {
                              if(err) throw err;
-                             var q1 = connection.query("insert into order_products(product_id,order_qunatity) values(?,?)",
+                             var q1 = 
+                             connection.query("insert into order_products(product_id,order_qunatity) values(?,?)",
                                 [
                                   prodid,prodqty
                                 ],function(err,res){
                                   if(err) throw err;
                                   //console.log('Insertinto',res);
-                                  confirmOrder('Order more items');
-
+                                  updateCatalog(prodid,prodqty);
                                 });
                     });
    }
+
+function updateCatalog(prodid,prodqty)
+{
+  for(var i =0; i < gl_catalog.length ; i++)
+  {
+     //  console.log(gl_catalog[i]);
+
+       var v1 = String(gl_catalog[i].product_id);
+       var v3 = v1.trim();
+        if (v3 === prodid.trim())
+        {
+            stock = gl_catalog[i].quanity - prodqty ;
+            gl_totalorder.push({
+              "ProductId: ": gl_catalog[i].product_id,
+              "Product Name: ": gl_catalog[i].product_name,
+             "Order quantity: ":prodqty,
+             "Unit Price":  gl_catalog[i].price,
+             "Amount : ": (prodqty * gl_catalog[i].price)});
+            gl_catalog[i].quantity = gl_catalog[i].quantity - prodqty;
+
+        }
+  }
+  console.log(gl_catalog);
+  console.log(gl_totalorder);
+  confirmOrder('Order more items');
+
+}
 
 function displaytotalorder()
 {
     console.log('\nYour Order details');
     //console.log(gl_totalorder);
     var l1 = gl_totalorder.length ;
+    var amount = 0;
+
     if ( l1 > 0)
     {
-          for(var i = 0; i < l1;i=i+3)
+          for(var i = 0; i < l1;i=i+4)
           {
-            console.log('\nProduct ID : ',gl_totalorder[i]);
-            console.log('Product Name : ',gl_totalorder[i+1]);
-            console.log('Quantity Ordered : ',gl_totalorder[i+2]);
+            // console.log('\nProduct ID : ',gl_totalorder[i]);
+            // console.log('Product Name : ',gl_totalorder[i+1]);
+            // console.log('Quantity Ordered : ',gl_totalorder[i+2]);
+            // console.log('Amount : ',gl_totalorder[i+3]);
+            console.log(gl_totalorder[i])
+            amount += gl_totalorder[i].Amount;
           }
+          console.log("Total Order: ",amount);
+          process.exit(0);
     }
     else {
       console.log('No Orders made !!!!');
+      process.exit(0);
     }
-  return ;
+  //return ;
 }
