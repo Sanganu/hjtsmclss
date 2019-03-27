@@ -13,6 +13,10 @@ database:"dubootcamp"
 
 var gl_catalog = [];
 var gl_totalorder = [];
+console.log("\n=============================================================");
+console.log("\nWelcome to Myamazon.com");
+console.log("\n=============================================================");
+
 
 enterChoice();
 
@@ -32,6 +36,7 @@ function getproducts()
 function enterChoice()
 {
       var getit = require ('inquirer');
+   
       getit.prompt([
         {
           message:"Menu options",
@@ -41,7 +46,7 @@ function enterChoice()
         }
       ]).then(function(data,err)
          {
-                console.log('data',data);
+                //console.log('data',data);
                 if ( data.menu === 'View Products for Sale')
                 {
                     displayCatalog()
@@ -56,13 +61,14 @@ function enterChoice()
                 }
                 else if( data.menu === 'Add New Product')
                 {
-                  console.log('option');
+                 // console.log('option');
                   addProduct();
                 }
                 else if( data.menu === 'Exit Application')
                 {
-                  console.log('See you!!');
+                  console.log('\nBye! See you soon!!!\n');
                   connection.end;
+                  process.exit(0);
                 }
 
          });
@@ -83,7 +89,7 @@ function displayInventory()
 {
       var getit = require ('inquirer');
       console.log("\n\nCheck Products less that entered quantity");
-      console.log("-----------------------------------------");
+      console.log("---------------------------------------------------------------");
       getit.prompt([
         {
           message:'Enter Quantity : ',
@@ -92,7 +98,9 @@ function displayInventory()
         }
       ]).then(function(data,err)
         {
-            console.log(`\nProducts less than ${data.vqty}`);
+          console.log("\n=============================================\n");  
+          console.log(`\nList of Products less than ${data.vqty}`);
+            console.log("\n=============================================\n");
             connection.query("select * from master_product where quantity < ?",[data.vqty],function(error,results)
              {
                  if(error) throw("Error Encountered!!",error);
@@ -107,7 +115,7 @@ function addInventory()
 {
         var getit = require ('inquirer');
         console.log("\nAdd Inventory to Products");
-        console.log("-----------------------------------------");
+        console.log("\n-----------------------------------------\n");
         getit.prompt([
           {
             message:'Enter Product ID : ',

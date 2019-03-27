@@ -3,12 +3,14 @@
 Folder: Myamazon.
 
 Amazon inspired shopping application at command line using node.js.
-Mysql, inquire, arrays, Scope of the arrays are the concepts used in this application.
+Mysql, inquire, arrays.
 
-"myamazon.js" runs the application from Users perspective. Items which low in quantity are not displayed. Accepting Orders and checking the orders don't exceed the available quantity. The users are provided with options to order more items or to check out. While exiting the application the list of orders are displayed.
+"myamazon.js" runs the application from Users/Customers perspective. Items which low in quantity are not displayed. Accepting Orders and checking the orders don't exceed the available quantity. The users are provided with options to order more items or to check out. While exiting the application the list of orders are displayed.
+
+!["Myamazon - Customer](link)
 
 "myamazon.js" runs the application from manager level. Where he can see the Catalogue. Check items which are below a specific level of inventory. Add more items to the Inventory. Add more products to the catalogue.
-
+![Myamazon - Manager](link)
 
 Folder: Hangman
 
@@ -26,11 +28,12 @@ Folder: liribot
 File name to run: liriv2.js
 Command prompt: node liriv2.js my-tweets
 
-The Files liriv1.js, liri.js are other versions developed along using constructors.
 
-This application uses Inquirer & fs.API calls to Twitter, Spotify, Omdbi are placed. 
+This application uses Inquirer & fs.
+API calls to Twitter, Spotify, Omdbi. 
 
-The fun application inspired by siri in apple phones. The twitter keys and the Spotify keys are currently empty. Valid twitter api keys and spotify api keys are needed to use this app. 
+"dotenv" pacakge is used to twitter and spotify keys.
+Valid twitter api keys and spotify api keys are needed to use this app. 
 
 node liriv2.js my-tweets
 
@@ -43,4 +46,5 @@ node liriv2.js do-what-it-says
 Reads a file and does the operation.
 The folder contains the other versions in development.liri.js uses constructors.
 
+!["Liribot"](link)
 

@@ -14,6 +14,7 @@ var connection = mysql.createConnection({
 
 var gl_catalog = [];
 var gl_totalorder = [];
+var gl_amount = 0;
 //Main Program
 establishConnection();
 
@@ -112,7 +113,7 @@ function updateTables(prodid, prodqty, stock) {
   var updatedstock = stock - prodqty
   var v2 = prodid.trim();
 
-  console.log("Stock issue",stock,prodqty,updatedstock);
+ // console.log("Stock issue",stock,prodqty,updatedstock);
   // Update Database
   var query = connection.query("update master_product set ? where ?",
     [
@@ -132,7 +133,22 @@ function updateTables(prodid, prodqty, stock) {
         ], function (err, res) {
           if (err) throw err;
           //console.log('Insertinto', res);
-          updateCatalog(prodid, prodqty);
+          
+          for (var i = 0; i < gl_catalog.length; i++) {
+           // console.log(gl_catalog[i].product_id,prodid,Number(prodid));
+            if(gl_catalog[i].product_id === Number(prodid))
+            {    gl_totalorder.push({
+                  "ProductId: ": gl_catalog[i].product_id,
+                  "Product Name: ": gl_catalog[i].product_name,
+                  "Order quantity: ": prodqty,
+                  "Unit Price": gl_catalog[i].price,
+                  "Amount : ": (prodqty * gl_catalog[i].price)
+                });
+                gl_amount += (prodqty * gl_catalog[i].price);
+              }
+          } 
+          confirmOrder('Order more items');       
+          //updateCatalog(prodid, prodqty);
         });
     });
 }
@@ -143,8 +159,8 @@ function updateCatalog(prodid, prodqty) {
 
     var v1 = String(gl_catalog[i].product_id);
     var v3 = v1.trim();
-    if (v3 === prodid.trim()) {
-      stock = gl_catalog[i].quanity - prodqty;
+    if (v3 === prodid) {
+     
       gl_totalorder.push({
         "ProductId: ": gl_catalog[i].product_id,
         "Product Name: ": gl_catalog[i].product_name,
@@ -163,21 +179,14 @@ function updateCatalog(prodid, prodqty) {
 }
 
 function displaytotalorder() {
-  console.log('\nYour Order details');
+  
   //console.log(gl_totalorder);
-  var l1 = gl_totalorder.length;
-  var amount = 0;
+  
 
-  if (l1 > 0) {
-    for (var i = 0; i < l1; i = i + 4) {
-      // console.log('\nProduct ID : ',gl_totalorder[i]);
-      // console.log('Product Name : ',gl_totalorder[i+1]);
-      // console.log('Quantity Ordered : ',gl_totalorder[i+2]);
-      // console.log('Amount : ',gl_totalorder[i+3]);
-      console.log(gl_totalorder[i])
-      amount += gl_totalorder[i].Amount;
-    }
-    console.log("Total Order: ", amount);
+  if (gl_totalorder.length> 0) {
+   
+    console.log('\nYour Order details\n==================\n',gl_totalorder);
+    console.log("Total Order: ", gl_amount);
     process.exit(0);
   }
   else {

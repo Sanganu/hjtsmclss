@@ -2,6 +2,7 @@
 //Created by: Sangeetha Kp
 
 var mysql = require('mysql');
+var Inquirer = require('inquirer');
 
 var connection = mysql.createConnection({
 host: "localhost",
@@ -141,18 +142,18 @@ function salereport(pid)
 
 function displaywhattodo()
 {
-        var getit = require('inquirer');
-        console.log("Sales Report");
-        getit.prompt([
+        //var getit = require('inquirer');
+        console.log("My Amazon - Supervisor role");
+        Inquirer.prompt([
           {
-            type:'rawlist',
+            type:'list',
             name:'opt',
             choices:['All Products','Specific Product','Exit Application'],
             message:'Select an option'
           }
         ]).then(function(reply)
            {
-             //console.log('Cont',reply.opt);
+             console.log('Cont',reply.opt);
              if(reply.opt === 'All Products' )
              {
                allsalesreport();
@@ -164,6 +165,8 @@ function displaywhattodo()
              {
                connection.end;
                console.log('See you next time!!');
+               //process.exit(0);
              }
            });
+           console.log("After inquire");
 }
