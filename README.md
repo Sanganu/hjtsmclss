@@ -46,5 +46,5 @@ node liriv2.js do-what-it-says
 Reads a file and does the operation.
 The folder contains the other versions in development.liri.js  whichuses constructors.
 
-![Google Drive](https://drive.google.com/open?id=169CtHpB7n6PcQZQJ3LX7MGovjJN1zX0T)
+![Giphy](https://github.com/Sanganu/hjtsmclss/blob/master/Hangman/President.gif)
 
