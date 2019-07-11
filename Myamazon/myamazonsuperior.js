@@ -8,13 +8,13 @@ var connection = mysql.createConnection({
 host: "localhost",
 port:3306,
 user: "root",
-password:"",
+password:"Mykutties2",
 database:"dubootcamp"
 });
 
 var gl_prodid = [];
 
-startdb();
+// startdb();
 displaywhattodo();
 
 
@@ -102,7 +102,7 @@ function allsalesreport()
        if(error) throw("Error Encountered!!",error);
        //console.log('The length', results.length);
        for(var i =0;i< results.length ; i++)
-       {
+       {   console.log("=========================================");
            console.log("Product ID: ",results[i].product_id);
            console.log("Product Name: ",results[i].product_name);
            console.log("Total Quantity Sold:",results[i].total_quantity);
@@ -143,10 +143,12 @@ function salereport(pid)
 function displaywhattodo()
 {
         //var getit = require('inquirer');
+        console.log("========================____=============");
         console.log("My Amazon - Supervisor role");
+        console.log("======================================");
         Inquirer.prompt([
           {
-            type:'list',
+            type:'rawlist',
             name:'opt',
             choices:['All Products','Specific Product','Exit Application'],
             message:'Select an option'
@@ -161,12 +163,16 @@ function displaywhattodo()
              else if(reply.opt === 'Specific Product' ){
                displayproduct();
              }
-             else if (reply.opt === 'Exit Application')
+             else if (reply.opt === 'Exit Application') 
              {
                connection.end;
                console.log('See you next time!!');
-               //process.exit(0);
+               process.exit(0);
              }
+           }).catch(function(error){
+             console.log("Error..",error);
            });
-           console.log("After inquire");
+           //console.log("After inquire");
+           //displaywhattodo();
 }
+  

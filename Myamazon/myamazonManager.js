@@ -70,7 +70,8 @@ function enterChoice()
                   connection.end;
                   process.exit(0);
                 }
-
+         }).catch(function(error){
+           console.log("Error....",error);
          });
 }
 
