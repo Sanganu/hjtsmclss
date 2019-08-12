@@ -1,4 +1,4 @@
-   in node.js */
+
 /* Dependencies - hangmans.js,cloze_constructors_1.js,cloze_constructors.js */
 /* Programm developed by:Sangeetha Kalia */
 /* cloze_constructors.js, cloze_constructors_1.js, oldhangman.js */
